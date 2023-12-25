@@ -1,6 +1,5 @@
 import streamlit as st
 import numpy as np
-import matplotlib.pyplot as plt
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D
 from tensorflow.keras.preprocessing import image
@@ -27,6 +26,9 @@ def denoising_model(input_shape):
 # Create the model
 model = denoising_model(input_shape=(256, 256, 3))
 
+# Load pre-trained weights (if available)
+# model.load_weights("path_to_pretrained_weights.h5")
+
 # Compile the model with perceptual loss
 model.compile(optimizer='adam', loss='mse')  # You can also try MeanSquaredError()
 
@@ -34,7 +36,7 @@ model.compile(optimizer='adam', loss='mse')  # You can also try MeanSquaredError
 st.title("Image Denoiser")
 
 # File uploader widget for uploading a noisy image
-noisy_image = st.file_uploader("Upload a Noisy Image", type=["jpg", "jpeg", "png"])
+noisy_image = st.file_uploader("Upload a Noisy Image", type=["image/*"])
 
 if noisy_image is not None:
     # Load and preprocess the noisy image
@@ -46,11 +48,11 @@ if noisy_image is not None:
     st.image(noisy_img, caption="Noisy Image", use_column_width=True)
     st.write("Noisy Image Shape:", noisy_img.shape)
 
-    # Train the model (you may need to adjust the training process based on your needs)
-    model.fit(noisy_img, noisy_img, epochs=100, batch_size=1)
-
     # Denoise the input noisy image
     denoised_img = model.predict(noisy_img)
+
+    # Ensure pixel values are in the valid range (0 to 1)
+    denoised_img = np.clip(denoised_img, 0.0, 1.0)
 
     # Print some information about the denoised image
     st.image(denoised_img, caption="Denoised Image", use_column_width=True)
