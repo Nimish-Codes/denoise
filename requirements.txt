@@ -1,4 +1,4 @@
+numpy>=1.16
 streamlit==1.24.0
-numpy==1.21.0
 matplotlib==3.4.3
 tensorflow==2.6.0
