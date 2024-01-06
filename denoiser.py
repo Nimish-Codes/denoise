@@ -65,4 +65,4 @@ if noisy_image_file is not None:
     st.image(np.squeeze(denoised_img), caption='Denoised Image', use_column_width=True)
 else:
     st.warning("Please upload an image.")
-    st.warning("Note: It blurs out the actual image to avoid noise in it, Module will be enhanced to give clear image output in successive updates until then enjoy this version. Thanks!
+st.write("Note: It blurs out the actual image to avoid noise in it, Module will be enhanced to give clear image output in successive updates until then enjoy this version. Thanks!")
