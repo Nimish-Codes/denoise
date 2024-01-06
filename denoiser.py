@@ -49,6 +49,7 @@ if noisy_image_file is not None:
     model.summary()
 
     # Train the model
+    clean_img = noisy_img  # Assuming the noisy_img is the clean version for simplicity
     model.fit(noisy_img, noisy_img, epochs=100, batch_size=1)
 
     # Denoise the input noisy image
